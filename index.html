@@ -2,8 +2,8 @@
 <html>
 
 <head>
-	<script src="assets/app/app.js"></script>
-	<link rel="stylesheet" href="assets/style/style.css">
+    <script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
+    <link rel="stylesheet" href="assets/style/style.css">
     <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <title>Train Schedule</title>
 </head>
@@ -18,7 +18,7 @@
                 <div class="panel panel-default">
                     <div class="panel-heading primary">Current Train Schedule</div>
                     <div class="panel-body">
-                        <table class="table">
+                        <table class="table" id="train-table">
                             <tr>
                                 <th>Train Name</th>
                                 <th>Destination</th>
@@ -45,32 +45,32 @@
                         Add Train
                     </div>
                     <div class="panel-body">
-                    	<form>
-                    	    <div class="form-group">
-                    	        <label for="trainName">Train Name</label>
-                    	        <input type="text" class="form-control">
-                    	    </div>
-                    	    <div class="form-grou">
-                    	        <label for="destinationName">Destination</label>
-                    	        <input type="text" class="form-control">
-                    	    </div>
-                    	    <div class="form-group">
-                    	        <label for="trainTime">First Train Time(HH:mm - military time)</label>
-                    	        <input type="text" class="form-control">
-                    	    </div>
-                    	    <div class="form-group">
-                    	        <label for="frequencyOfTrain">Frequency (min)</label>
-                    	        <input type="text" class="form-control">
-                    	    </div>
-                    	    <button class="btn btn-primary">Submit</button>
-                    	</form>
+                        <form>
+                            <div class="form-group">
+                                <label for="trainName">Train Name</label>
+                                <input type="text" class="form-control" id="train-name">
+                            </div>
+                            <div class="form-grou">
+                                <label for="destinationName">Destination</label>
+                                <input type="text" class="form-control" id="destination">
+                            </div>
+                            <div class="form-group">
+                                <label for="trainTime">First Train Time(HH:mm - military time)</label>
+                                <input type="text" class="form-control" id="train-time">
+                            </div>
+                            <div class="form-group">
+                                <label for="frequencyOfTrain">Frequency (min)</label>
+                                <input type="text" class="form-control" id="frequency">
+                            </div>
+                            <button class="btn btn-primary" id="submit">Submit</button>
+                        </form>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 </body>
-<script src="https://www.gstatic.com/firebasejs/4.4.0/firebase.js"></script>
-    <script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.2.1.min.js" integrity="sha256-hwg4gsxgFZhOsEEamdOYGBf13FyQuiTwlAQgxVSNgt4=" crossorigin="anonymous"></script>
+<script src="assets/app/app.js"></script>
 
 </html>
