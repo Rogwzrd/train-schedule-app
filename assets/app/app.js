@@ -17,38 +17,32 @@
   //variables for holding the train values
   var trainName = "",
       destination = "",
-      trainTime = "",
-      frequency = "";
-      tillNextTrain = null;
+      firstTrainTime = "",
+      frequency = 0,
+      tillNextTrain = "",
+      timetillNextTrain = "";
 
-
-  //when you click on the submit button trun this funciton
+  //when you click on the submit button run this funciton
   $("#submit").on("click", function(event) {
 
       event.preventDefault();
-
-      var firstTime = momemnt(trainTime);
 
       //reassign the train values with the input from inputs on the page
       trainName = $("#train-name").val().trim();
       destination = $("#destination").val().trim();
 
       //this is the first time of departure for the train
-      // trainTime = $("#train-time").val().trim();
+      firstTrainTime = $("#train-time").val().trim();
 
       //this is how long it takes for the train to arrive at it's destination
       frequency = $("#frequency").val().trim();
 
-      //this line needs to be an updating value based on the trainTime and the frequency, calculate the time between the frequency of the trains arrival and its departure time, this number will change with every cycle of the duration
-      // tillNextTrain = momemnt(trainTime) + momemnt()
-
-      //push the tnew train values to the database
+      //push the new train values to the database
       database.ref().push({
         trainName: trainName,
         destination: destination,
-        trainTime: trainTime,
+        firstTrainTime: firstTrainTime,
         frequency: frequency,
-        tillNextTrain: tillNextTrain
       });
 
       //empty the input areas
@@ -63,23 +57,36 @@
   database.ref().on("child_added", function(snapshot) {
     console.log(snapshot.val());
 
+    var currentTime = moment(),
+
+      convertedFirstTime = moment(snapshot.val().firstTrainTime, "hh:mm").subtract(1, "years"),
+
+      timeDiff = moment().diff(moment(convertedFirstTime), "minutes"),
+
+      remainingTime = timeDiff % snapshot.val().frequency,
+
+      timeTillNextTrain = snapshot.val().frequency - remainingTime,
+
+      tillNextTrain = moment().add(timeTillNextTrain, "minutes");
+
+      console.log(timeTillNextTrain)
     //create new table row element
     var newRow = $("<tr>"),
 
         //create new table column elements and add values to them from the database
-        newTrain = $("<td>").text(snapshot.val().trainName),
-        newDestination = $("<td>").text(snapshot.val().destination),
-        newTrainTime = $("<td>").text(snapshot.val().trainTime),
-        newFrequency = $("<td>").text(snapshot.val().frequency);
-        newTillNextTrain = $("<td>").text(snapshot.val().tillNextTrain);
+        trainCol = $("<td>").text(snapshot.val().trainName),
+        destinationCol = $("<td>").text(snapshot.val().destination),
+        frequencyCol = $("<td>").text(snapshot.val().frequency),
+        nextArrival = $("<td>").text(moment(tillNextTrain).format("LLLL"));
+        minAway = $("<td>").text(timeTillNextTrain);
 
         //appened the colums to the row
         newRow
-        .append(newTrain)
-        .append(newDestination)
-        .append(newTrainTime)
-        .append(newFrequency),
-        .append(newTillNextTrain);
+        .append(trainCol)
+        .append(destinationCol)
+        .append(frequencyCol)
+        .append(nextArrival)
+        .append(minAway);
 
         //append the row which is now holding columns elements to the table
         $("#train-table").append(newRow);
