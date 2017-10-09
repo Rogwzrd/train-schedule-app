@@ -29,6 +29,8 @@
 
       //reassign the train values with the input from inputs on the page
       trainName = $("#train-name").val().trim();
+
+      //this adds the name of the train
       destination = $("#destination").val().trim();
 
       //this is the first time of departure for the train
